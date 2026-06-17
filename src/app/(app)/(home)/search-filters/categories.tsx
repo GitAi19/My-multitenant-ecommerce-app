@@ -1,14 +1,16 @@
 "use client";
 import { CategoryDropdown } from "./category-dropdown";
 import { CategoriesSidebar } from "./categories-sidebar";
-import { CustomCategory } from "../types";
+
+import { CategoriesGetManyOutput } from "@/modules/types";
+
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ListFilterIcon } from "lucide-react";
 
 interface Props {
-    data: CustomCategory[];
+    data: CategoriesGetManyOutput
 };
 
 export const Categories = ({ data }: Props) => {
@@ -31,7 +33,7 @@ export const Categories = ({ data }: Props) => {
 
             const containerWidth = containerRef.current.offsetWidth;
             const viewAllWidth = viewAllRef.current.offsetWidth;
-            const availableWidth = containerWidth - viewAllRef;
+            const availableWidth = containerWidth - viewAllWidth;
 
             const items = Array.from(measureRef.current.children);
             let totalWidth = 0;
@@ -55,7 +57,7 @@ export const Categories = ({ data }: Props) => {
     return (
         <div className="relative w-full">
             {/* Categories Sidebar*/}
-            <CategoriesSidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} data={data}/>
+            <CategoriesSidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen} />
 
             {/* Hidden div to m,easure all items */}
             <div

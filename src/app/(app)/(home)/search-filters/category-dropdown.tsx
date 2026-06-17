@@ -6,12 +6,15 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 import { SubcategoryMenu } from "./subcategory-menu";
+
+import { CategoriesGetManyOutput } from "@/modules/types";
+
 import { useDropdownPosition } from "./use-dropdown-position";
 import { CustomCategory } from "../types";
 import Link from "next/link";
 
 interface Props {
-    category: CustomCategory;
+    category: CategoriesGetManyOutput[1];
     isActive: boolean;
     isNavigationHovered?: boolean;
 };

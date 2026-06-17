@@ -10,7 +10,7 @@ import { SubcategoryMenu } from "./subcategory-menu";
 import { CategoriesGetManyOutput } from "@/modules/types";
 
 import { useDropdownPosition } from "./use-dropdown-position";
-import { CustomCategory } from "../types";
+
 import Link from "next/link";
 
 interface Props {

@@ -4,12 +4,12 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 
 import { useTRPC } from "@/trpc/client";
 
-import { CustomCategory } from "../types";
 import { Categories } from "./categories";
 import { SearchInput } from "./search-input";
+import { CategoriesGetManyOutput } from "@/modules/types";
 
 interface Props {
-    data: CustomCategory[];
+    data: CategoriesGetManyOutput[1];
 };
 
 export const SearchFilters = () => {

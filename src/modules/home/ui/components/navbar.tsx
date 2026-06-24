@@ -10,8 +10,8 @@ import { useTRPC } from "@/trpc/client";
 import { MenuIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-import { NavbarSidebar } from "./navbar-sidebar";
 import { useQuery } from "@tanstack/react-query";
+import { NavbarSidebar } from "./navbar-sidebar";
 
 const poppins = Poppins({
     subsets: ["latin"],

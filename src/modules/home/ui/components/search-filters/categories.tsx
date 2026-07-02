@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import { CategoryDropdown } from "./category-dropdown";
 import { CategoriesSidebar } from "./categories-sidebar";
 
-import { CategoriesGetManyOutput } from "@/modules/types";
+import { CategoriesGetManyOutput } from "@/modules/categories/types";
 
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -88,6 +88,8 @@ export const Categories = ({ data }: Props) => {
                 onMouseEnter={() => setIsAnyHovered(true)}
                 onMouseLeave={() => setIsAnyHovered(false)}
             >
+                {/* TODO: HArdcode "ALL" button */}
+
                 {data.slice(0, visibleCount).map( category => (
                 <div key={category.id}>
                     <CategoryDropdown

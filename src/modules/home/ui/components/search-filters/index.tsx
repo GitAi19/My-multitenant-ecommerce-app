@@ -9,7 +9,7 @@ import { Categories } from "./categories";
 import { DEFAULT_BG_COLOR } from "@/modules/home/constants";
 
 import { SearchInput } from "./search-input";
-import { CategoriesGetManyOutput } from "@/modules/types";
+import { CategoriesGetManyOutput } from "@/modules/products/types";
 import { BreadcrumbNavigation } from "./breadcrumb-navigation";
 import { useParams } from "next/navigation";
 

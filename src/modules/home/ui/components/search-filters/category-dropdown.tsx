@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 import { SubcategoryMenu } from "./subcategory-menu";
 
-import { CategoriesGetManyOutput } from "@/modules/types";
+import { CategoriesGetManyOutput } from "@/modules/products/types";
 
 import { useDropdownPosition } from "./use-dropdown-position";
 

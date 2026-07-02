@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sheet";
 import { ChevronLeftIcon } from "lucide-react";
 import { useTRPC } from "@/trpc/client";
-import { CategoriesGetManyOutput } from "@/modules/types";
+import { CategoriesGetManyOutput } from "@/modules/products/types";
 
 interface Props {
     open: boolean;

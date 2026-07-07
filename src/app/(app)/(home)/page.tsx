@@ -13,3 +13,6 @@ export default function Home() {
       </div>
   );
 };
+
+//loclhost:3000/favicon.ico
+//localhost:3000/design

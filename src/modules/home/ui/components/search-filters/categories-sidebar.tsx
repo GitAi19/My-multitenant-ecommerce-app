@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sheet";
 import { ChevronLeftIcon } from "lucide-react";
 import { useTRPC } from "@/trpc/client";
-import { CategoriesGetManyOutput } from "@/modules/products/types";
+import { CategoriesGetManyOutput } from "@/modules/categories/types";
 
 interface Props {
     open: boolean;
@@ -24,7 +24,7 @@ export const CategoriesSidebar = ({
     onOpenChange,
 }: Props) => {
     const trpc = useTRPC();
-    const { data }= useQuery(trpc.categories.getMany.queryOptions());
+    const { data } = useQuery(trpc.categories.getMany.queryOptions());
     const router = useRouter();
 
     const [parentCategories, setParentCategories] = useState<CategoriesGetManyOutput | null>(null);
@@ -41,7 +41,7 @@ export const CategoriesSidebar = ({
 
     const handleCategoryClick = (category: CategoriesGetManyOutput[1]) => {
         if (category.subcategories && category.subcategories.length > 0) {
-           setParentCategories(category.subcategories as CategoriesGetManyOutput);
+            setParentCategories(category.subcategories as CategoriesGetManyOutput);
             setSelectedCategory(category);
         } else {
             // This is leaf category (no subcategories)

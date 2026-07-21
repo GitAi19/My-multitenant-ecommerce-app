@@ -7,6 +7,27 @@ import { sortValues } from "../search-params";
 import { DEFAULT_LIMIT } from "@/constants";
 
 export const productsRouter = createTRPCRouter({
+    getOne: baseProcedure
+        .input(
+            z.object({
+                id: z.string(),
+            })
+        )
+        .query(async ({ ctx, input }) => {
+            const product = await ctx.db.findByID({
+                collection: "products",
+                id: input.id,
+                depth: 2, //we need depth 2 as to load the tenant we need depth 1 and to load the image as well w need depth 2. It loads the "product.image", "product.tenant", "product.tenant.image"
+            });
+
+
+            return {
+                ...product,
+                image: product.image as Media | null,
+                cover: product.cover as Media | null,
+                tenant: product.tenant as Tenant & { image: Media | null },
+            };
+        }),
     getMany: baseProcedure
         .input(
             z.object({

@@ -1,11 +1,29 @@
 "use client";
 
 import { generateTenantURL } from "@/lib/utils";
+
 import { useTRPC } from "@/trpc/client"
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+import { Button } from "@/components/ui/button";
+import { ShoppingBagIcon } from "lucide-react";
+
+const CheckoutButton = dynamic(
+    () => import("@/modules/checkout/ui/components/checkout-button").then(
+        (mod) => mod.CheckoutButton,
+    ),
+    {
+        ssr: false,
+        loading: () => (
+            <Button disabled className="flex-1 bg-white">
+                <ShoppingBagIcon className="text-black" />
+            </Button>
+        )
+    },
+);
 
 interface Props {
     slug: string;
@@ -24,12 +42,13 @@ export const Navbar = ({ slug }: Props) => {
                             src={data.image.url}
                             width={32}
                             height={32}
-                            className = "rounded-full border shrink-0 size-32px"
+                            className="rounded-full border shrink-0 size-32px"
                             alt={slug}
                         />
                     )}
                     <p className="text-xl">{data.name}</p>
                 </Link>
+                <CheckoutButton hideIfEmpty tenantSlug={slug} />
             </div>
         </nav>
     );
@@ -40,7 +59,9 @@ export const NavbarSkeleton = () => {
         <nav className="h-20 border-b font-medium bg-white">
             <div className="max-w-(--breakpoint-xl) mx-auto flex justify-between items-center h-full px-4lg:px-12">
                 <div />
-                {/*TODO: Skeleton for checkout buton */}
+                <Button disabled className="flex-1 bg-white">
+                    <ShoppingBagIcon className="text-black" />
+                </Button>
             </div>
         </nav>
     );

@@ -43,7 +43,7 @@ export const SearchInput = ({
                     asChild
                     variant="elevated"
                 >
-                    <Link href="/Library">
+                    <Link prefetch href="/Library">
                         <BookmarkCheckIcon />
                         Library
                     </Link>

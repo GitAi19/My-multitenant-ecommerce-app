@@ -18,10 +18,10 @@ export const Products: CollectionConfig = {
         {
             name: "price",
             type: "number",
-            required: true,
             admin: {
                 description: "Price in INR"
-            }
+            },
+            required: true
         },
         {
             name: "category",

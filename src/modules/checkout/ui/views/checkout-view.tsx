@@ -10,7 +10,6 @@ import { CheckoutItem } from "../components/checkout-item";
 import { CheckoutSidebar } from "../components/checkout-sidebar";
 import { InboxIcon, LoaderIcon } from "lucide-react";
 import { useCheckoutStates } from "../../hooks/use-checkout-states";
-import { success } from "zod";
 import { useRouter } from "next/navigation";
 
 interface CheckoutViewProps {
@@ -50,7 +49,7 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
             // TODO: to invalidate library
             router.push("/products");
         }
-    }, [states.success, clearCart, router, setStates]);
+    }, [states.success, clearCart, router]);
 
     useEffect(() => {
         if (error?.data?.code === "NOT_FOUND") {

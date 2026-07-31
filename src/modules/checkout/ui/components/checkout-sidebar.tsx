@@ -7,7 +7,7 @@ interface CheckoutSidebarProps {
     onPurchase: () => void;
     isCanceled?: boolean;
     disabled?: boolean;
-}
+}; 
 
 export const CheckoutSidebar = ({
     total,

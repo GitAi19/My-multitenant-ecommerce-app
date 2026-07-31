@@ -7,7 +7,6 @@ import { TRPCError } from "@trpc/server";
 import type Stripe from "stripe";
 import { CheckoutMetadata, ProductMetadata } from "../types";
 import { stripe } from "@/lib/stripe";
-import { generateTenantURL } from "@/lib/utils";
 
 export const checkoutRouter = createTRPCRouter({
     purchase: protectedProcedure
@@ -83,7 +82,7 @@ export const checkoutRouter = createTRPCRouter({
             const checkout = await stripe.checkout.sessions.create({
                 customer_email: ctx.session.user.email,
                 success_url: `${process.env.NEXT_PUBLIC_APP_URL}/tenants/${input.tenantSlug}/checkout?success=true`,
-                cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/tenants/${input.tenantSlug}/checkout?cancel=true`,
+                cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}`,
                 mode: "payment",
                 line_items: lineItems,
                 invoice_creation: {
@@ -91,11 +90,13 @@ export const checkoutRouter = createTRPCRouter({
                 },
                 metadata: {
                     userId: ctx.session.user.id,
-                } as CheckoutMetadata
+                } as CheckoutMetadata,
             });
 
             if (!checkout.url) {
-                throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to create checkout session" });
+                throw new TRPCError({ 
+                    code: "INTERNAL_SERVER_ERROR", message: "Failed to create checkout session" 
+                });
             }
             return { url: checkout.url };
         })
@@ -135,6 +136,6 @@ export const checkoutRouter = createTRPCRouter({
                     image: doc.image as Media | null,
                     tenant: doc.tenant as Tenant & { image: Media | null },
                 }))
-            }
+            };
         }),
 });

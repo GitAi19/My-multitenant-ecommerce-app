@@ -110,16 +110,18 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
 
                     <div className="col-span-2">
                         <div className="border-t lg:border-t-0 lg:border-l h-full">
-                            <div className="flex flex-col gap-4 p-6 border-b"> 
-                                <div className="flex flex-row items-center gap-2"> 
-                                    <CartButton 
-                                        productId={productId}
-                                        tenantSlug={tenantSlug}
-                                  />
-                                    <Button 
+                            <div className="flex flex-col gap-4 p-6 border-b">
+                                <div className="flex flex-row items-center gap-2">
+                                        <CartButton
+                                        isPurchased={data.isPurchased}
+                                            productId={productId}
+                                            tenantSlug={tenantSlug}
+                                        />
+
+                                    <Button
                                         className="size-12"
                                         variant="elevated"
-                                        onClick={() => {}}
+                                        onClick={() => { }}
                                         disabled={false}
                                     >
                                         <LinkIcon />
@@ -147,7 +149,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                                     {[5, 4, 3, 2, 1].map((stars) => (
                                         <Fragment key={stars}>
                                             <div className="font-medium">{stars} {stars === 1 ? "star" : "stars"}</div>
-                                            <Progress 
+                                            <Progress
                                                 value={50}
                                                 className="h-1lh"
                                             />

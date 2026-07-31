@@ -61,7 +61,7 @@ export async function POST(req: Request) {
                     const expandedSession = await stripe.checkout.sessions.retrieve(
                         data.id,
                         {
-                            expand: ["Line_items.data.price.product"],
+                            expand: ["line_items.data.price.product"],
                         },
                     );
 
@@ -72,7 +72,7 @@ export async function POST(req: Request) {
                         throw new Error("No line items found");
                     }
 
-                    const lineItems = expandedSession.line_items?.data as ExpandedLineItem[];
+                    const lineItems = expandedSession.line_items.data as ExpandedLineItem[];
 
                     for (const item of lineItems) {
                         await payload.create({
@@ -98,5 +98,8 @@ export async function POST(req: Request) {
         }
     }
 
-    return NextResponse.json({ message: "Received" }, { status: 200 });
+    return NextResponse.json(
+        { message: "Received" }, 
+        { status: 200 },
+    );
 };

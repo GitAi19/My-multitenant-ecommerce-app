@@ -34,7 +34,7 @@ export const SearchInput = ({
             <Button
                 variant="elevated"
                 className="size-12 shrink-0 flex lg:hidden"
-                onClick={() => setIsSidebarOpen}
+                onClick={() => setIsSidebarOpen(true)}
             >
                 <ListFilterIcon />
             </Button>
@@ -43,7 +43,7 @@ export const SearchInput = ({
                     asChild
                     variant="elevated"
                 >
-                    <Link prefetch href="/Library">
+                    <Link prefetch href="/library">
                         <BookmarkCheckIcon />
                         Library
                     </Link>

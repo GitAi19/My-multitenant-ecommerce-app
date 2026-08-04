@@ -13,7 +13,7 @@ interface Props {
 
 export const ProductView = ({ productId }: Props) => {
     const trpc = useTRPC();
-    const {data} = useSuspenseQuery(trpc.library.getOne.queryOptions({
+    const { data } = useSuspenseQuery(trpc.library.getOne.queryOptions({
         productId,
     }));
 
@@ -35,14 +35,20 @@ export const ProductView = ({ productId }: Props) => {
 
                     <div className="lg:col-span-2">
                         <div className="p-4 bg-white rounded-md border gap-4">
-                            <ReviewSidebar productId={productId}/>
+                            <ReviewSidebar productId={productId} />
                         </div>
 
                     </div>
                     <div className="lg:col-span-5">
-                        <p className="font-medium static text-muted-foreground">
-                            No special content
-                        </p>
+                        {data.content ?
+                            <p>
+                                {data.content}
+                            </p>
+                            : (
+                                <p className="font-medium static text-muted-foreground">
+                                    No special content
+                                </p>
+                            )}
                     </div>
 
                 </div>

@@ -78,6 +78,11 @@ export const checkoutRouter = createTRPCRouter({
                                 equals: input.tenantSlug
                             }
                         },
+                        {
+                            isArchived: {
+                                not_equals: true,
+                            },
+                        }
                     ]
                 }
             })
@@ -131,13 +136,13 @@ export const checkoutRouter = createTRPCRouter({
                     }
                 }));
 
-                const totalAmount = products.docs.reduce(
-                    (acc, item) => acc + item.price * 100,
-                    0
-                );
-                const platformFeeAmount = Math.round(
-                    totalAmount * (PLATFORM_FEE_PERCENTAGE / 100)
-                );
+            const totalAmount = products.docs.reduce(
+                (acc, item) => acc + item.price * 100,
+                0
+            );
+            const platformFeeAmount = Math.round(
+                totalAmount * (PLATFORM_FEE_PERCENTAGE / 100)
+            );
 
             const checkout = await stripe.checkout.sessions.create({
                 customer_email: ctx.session.user.email,
@@ -159,8 +164,8 @@ export const checkoutRouter = createTRPCRouter({
             });
 
             if (!checkout.url) {
-                throw new TRPCError({ 
-                    code: "INTERNAL_SERVER_ERROR", message: "Failed to create checkout session" 
+                throw new TRPCError({
+                    code: "INTERNAL_SERVER_ERROR", message: "Failed to create checkout session"
                 });
             }
             return { url: checkout.url };
@@ -178,9 +183,18 @@ export const checkoutRouter = createTRPCRouter({
                 collection: "products",
                 depth: 2, //populate "category", "tanant", "tenant.
                 where: {
-                    id: {
-                        in: input.ids,
-                    },
+                    and: [
+                        {
+                            id: {
+                                in: input.ids,
+                            },
+                        },
+                        {
+                            isArchived: {
+                                not_equals: true,
+                            },
+                        },
+                    ],
                 },
             });
 

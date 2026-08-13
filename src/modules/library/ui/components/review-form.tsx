@@ -1,12 +1,12 @@
-import {z} from "zod";
-import {useState} from "react";
-import {useForm} from "react-hook-form";
+import { z } from "zod";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useTRPC } from "@/trpc/client";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import {StarPicker} from "@/components/star-picker";
+import { StarPicker } from "@/components/star-picker";
 import {
     Form,
     FormControl,
@@ -28,7 +28,7 @@ interface Props {
 }
 
 const formSchema = z.object({
-    rating: z.number().min(1, {message: "Rating is required" }).max(5),
+    rating: z.number().min(1, { message: "Rating is required" }).max(5),
     description: z.string().min(1, { message: "Description is required" }),
 });
 
@@ -48,7 +48,7 @@ export const ReviewForm = ({ productId, initialData }: Props) => {
         onError: (error) => {
             toast.error(error.message)
         },
-    })) 
+    }))
     const updateReview = useMutation(trpc.reviews.update.mutationOptions({
         onSuccess: () => {
             queryClient.invalidateQueries(trpc.reviews.getOne.queryOptions({
@@ -59,7 +59,7 @@ export const ReviewForm = ({ productId, initialData }: Props) => {
         onError: (error) => {
             toast.error(error.message)
         },
-    })) 
+    }))
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -94,34 +94,34 @@ export const ReviewForm = ({ productId, initialData }: Props) => {
                 <p className="font-medium">
                     {isPreview ? "Your rating:" : "Liked it? Give it a rating"}
                 </p>
-                <FormField 
+                <FormField
                     control={form.control}
                     name="rating"
                     render={({ field }) => (
                         <FormItem>
-                            <FormControl>  
-                                <StarPicker 
+                            <FormControl>
+                                <StarPicker
                                     value={field.value}
                                     onChange={field.onChange}
                                     disabled={isPreview}
                                 />
-                            </FormControl>  
+                            </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
-                <FormField 
+                <FormField
                     control={form.control}
                     name="description"
                     render={({ field }) => (
                         <FormItem>
-                            <FormControl>  
-                                <Textarea 
+                            <FormControl>
+                                <Textarea
                                     placeholder="Want to leave a written review?"
                                     disabled={isPreview}
                                     {...field}
                                 />
-                            </FormControl>  
+                            </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
@@ -152,3 +152,29 @@ export const ReviewForm = ({ productId, initialData }: Props) => {
         </Form>
     );
 };
+
+export const ReviewFormSkeleton = () => {
+    return (
+        <div className="flex flex-col gap-y-4">
+            <p className="font-medium">
+                Liked it? Give it a rating
+            </p>
+            <StarPicker
+                disabled
+            />
+            <Textarea
+                placeholder="Want to leave a written review?"
+                disabled
+            />
+            <Button
+                variant="elevated"
+                disabled
+                type="button"
+                size="lg"
+                className="bg-black text-white hover:bg-pink-400 hover:text-primary w-fit"
+            >
+                Post Review
+            </Button>
+        </div>
+    )
+}

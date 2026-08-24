@@ -14,16 +14,23 @@ interface Props {
     searchParams: Promise<SearchParams>;
 };
 
+export const dynamic = "force-dynamic";
+
 const Page = async ({ params, searchParams }: Props) => {
     const { category } = await params;
     const filters = await loadProductFilters(searchParams);
 
     const queryClient = getQueryClient();
-    void queryClient.prefetchInfiniteQuery(trpc.products.getMany.infiniteQueryOptions({
+    void queryClient.prefetchInfiniteQuery(trpc.products.getMany.infiniteQueryOptions(
+        {
         ...filters,
         category,
         limit: DEFAULT_LIMIT,
-    }));
+        },
+        {
+            getNextPageParam: (lastPage) => lastPage.nextPage,
+        }
+    ));
 
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>

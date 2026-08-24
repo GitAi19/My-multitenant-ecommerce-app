@@ -114,13 +114,14 @@ export const libraryRouter = createTRPCRouter({
                 })
             );
             
-            return {
+            return {             
                 ...productsData,
                 docs: dataWithSummarizedReviews.map((doc) => ({
                     ...doc,
                     image: doc.image as Media | null,
                     tenant: doc.tenant as Tenant & { image: Media | null },
-                }))
+                })),
+                nextPage: ordersData.nextPage,
             };
         }),
 })

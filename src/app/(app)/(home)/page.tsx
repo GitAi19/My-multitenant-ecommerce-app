@@ -15,10 +15,15 @@ const Page = async ({ searchParams }: Props) => {
     const filters = await loadProductFilters(searchParams);
 
     const queryClient = getQueryClient();
-    void queryClient.prefetchInfiniteQuery(trpc.products.getMany.infiniteQueryOptions({
-        ...filters,
-        limit: DEFAULT_LIMIT,
-    }));
+    void queryClient.prefetchInfiniteQuery(trpc.products.getMany.infiniteQueryOptions(
+        {
+            ...filters,
+            limit: DEFAULT_LIMIT,
+        },
+        {
+            getNextPageParam: (lastPage) => lastPage.nextPage,
+        },
+    ));
 
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>
